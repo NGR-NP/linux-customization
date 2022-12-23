@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/N-G-R/.conky/Antares/start_conky.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Widget
+Name=Widget
+Comment[en_US]=conky
+Comment=conky
+Icon=anjuta.svg
+StartupWMClass=widget

@@ -1,0 +1,74 @@
+conky.config = {
+-- By Khiky_Merveilles
+	background = true,
+	use_xft = true,
+	font = 'DEBROSEE, Regular:size=9',
+	xftalpha = 0.8,
+	update_interval = 1,
+	total_run_times = 0,
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_transparent = true,
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	double_buffer = true,
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
+	stippled_borders = 0,
+	border_margin = '5',
+	border_width = 1,
+	default_color = '#000000',
+	default_shade_color = '#000000',
+	default_outline_color = '#000000',
+	minimum_width = 5000, minimum_height = 400,
+	maximum_width = 5000,
+	gap_x = 0,
+	gap_y = 0,
+	alignment = 'bottom_right',
+	no_buffers = true,
+	uppercase = false,
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	short_units = true,
+	text_buffer_size = 2048,
+	use_spacer = 'none',
+	override_utf8_locale = true,
+	lua_load = '~/.conky/Antares/rings-v1.2.1.lua ~/.conky/Antares/time.lua',
+	lua_draw_hook_pre = 'ring_stats',
+
+-- Color scheme #
+	default_color = 'white',
+	color1 = 'white',
+	color2 = '#FD7F00',
+	color3 = '#F5F24C',
+	color4 = 'blue',
+
+	own_window_argb_value = 0,
+	own_window_argb_visual = true,
+	own_window_colour = '#000000',
+
+};
+
+conky.text = [[
+${offset 50}${voffset }${color2}${font DEBROSEE, Regular:size=50:bold} .${color1}${time %A}
+${offset 95}${voffset -40}${font DEBROSEE, Regular:size=14}${time %d %B}
+${offset 79}${voffset -22}${font Metropolis Medium:size=14:bold}${time %d}
+${image ~/.conky/Antares/bg.png -p 75,110 -s 54x54}
+# --- WOEID (Location id) --- #
+${execi 300 ~/.conky/Antares/scripts/weather.sh}\
+\
+${offset 75}${voffset 0}${execi 100 ~/.conky/Antares/scripts/weather-icon.sh white $(cat ~/.cache/eleg-weather.json | jq -r '.weather[0].icon')}${image ~/.cache/eleg-weather-icon.png -p 83,119 -s 36x36}
+${offset 148}${voffset -46}${color1}${font Metropolis Medium:size=9:italic}The Weather in ${execi 100 cat ~/.cache/eleg-weather.json | jq -r '.name'} is ${execi 100 cat ~/.cache/eleg-weather.json | jq -r '.weather[0].main'}. ${execi 100 ~/.conky/Antares/scripts/kelvin2celsius.sh $(cat ~/.cache/eleg-weather.json | jq '.main.temp')} 'c
+${offset 148}${voffset 1}${color1}${font Metropolis Medium:size=9:italic}${image ~/.conky/Antares/icons/white/wind.png -p 146,127 -s 20x20}       wind speed in your location is ${execi 100 (cat ~/.cache/eleg-weather.json | jq '.wind.speed')}km/h
+${offset 148}${voffset 1}${color1}${font Metropolis Medium:size=9:italic}and       ${image ~/.conky/Antares/icons/white/humidity.png -p 170,150 -s 20x20} Humidity is ${execi 100 (cat ~/.cache/eleg-weather.json | jq '.main.humidity')}%
+${image ~/.conky/Antares/line.png -p 70,190}
+${image ~/.conky/Antares/line.png -p 192,190}
+${offset 130}${voffset 25}${font Metropolis Medium:size=9:bold}Cpu:${color3}
+${offset 130}${voffset }${font Metropolis Medium:size=9}${cpu cpu0}%
+${offset 240}${voffset -33}${font Metropolis Medium:size=9:bold}${color1}Ram:${color3}
+${offset 240}${font Metropolis Medium:size=9}$memperc %${color2}
+${offset 350}${voffset -33}${font Metropolis Medium:size=9:bold}${color1}Home :${color3}
+${offset 350}${font Metropolis Medium:size=9}$fs_used_perc %
+${voffset 30}${offset 75}${color1}${font DEBROSEE, Regular:size=14:bold}Time is ${lua Hour}.${lua Minute}
+]];
